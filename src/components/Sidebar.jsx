@@ -58,7 +58,7 @@ const Sidebar = () => {
       </button>
       <div className="flex items-center gap-2 cursor-pointer transition-600 w-[80%] py-2 px-6 rounded-full hover:border-[1px] hover:border-white hover:text-black">
         <img
-          className="w-10 h-10 rounded-full"
+          className="w-14 h-14 rounded-full border-white border-2"
           src="/prof-image.jpg"
           alt="profile-image"
         />
