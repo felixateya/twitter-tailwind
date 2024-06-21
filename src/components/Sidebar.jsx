@@ -34,8 +34,8 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { signout } = useAuth();
   return (
-    <aside className="w-[23%] border-r-[1px] flex flex-col gap-6 pl-10 py-2 border-r-white h-full">
-      <Link className="font-bold flex items-center ml-4 text-3xl w-14 h-14 rounded-full p-4 transition-600 hover:bg-gray-300">
+    <aside className="w-[23%] border-r-[1px] flex flex-col gap-6 xl:pl-10 pl-2 py-2 border-r-gray-600 h-full">
+      <Link to='/' className="font-bold flex items-center text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200">
         <FaXTwitter />
       </Link>
       <div className=" flex gap-4 flex-col">
@@ -46,7 +46,7 @@ const Sidebar = () => {
             className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-2 transition-600 hover:bg-white hover:font-semibold hover:text-black"
           >
             <p>{mylink.icon}</p>
-            <p>{mylink.text}</p>
+            <p className="hidden xl:block">{mylink.text}</p>
           </NavLink>
         ))}
       </div>
@@ -56,15 +56,15 @@ const Sidebar = () => {
       >
         Log Out
       </button>
-      <div className="flex items-center gap-2 cursor-pointer transition-600 w-[80%] py-2 px-6 rounded-full hover:border-[1px] hover:border-white hover:text-black">
+      <div className="flex items-center gap-2 cursor-pointer transition-600 w-[80%] py-2 px-6 rounded-full">
         <img
-          className="w-14 h-14 rounded-full border-white border-2"
+          className="w-16 h-16 rounded-full border-gray-500 border-4"
           src="/prof-image.jpg"
           alt="profile-image"
         />
         <div>
-          <p className="text-sm text-white font-semibold">username</p>
-          <p className="text-gray-200 text-sm ">@username</p>
+          <p className="text-lg text-white font-semibold">username</p>
+          <p className="text-gray-500 text-sm ">@username</p>
         </div>
       </div>
     </aside>

@@ -10,9 +10,9 @@ const HomeLayout = () => {
   console.log(user, isAuthenticated)
   
   return (
-    <div className="bg-black w-full h-screen flex">
+    <div className="bg-[#15202B] w-full h-screen flex">
         <Sidebar/>
-        <main className="w-[40%] h-full border-r-[1px] border-r-gray-200">
+        <main className="w-[40%] h-full border-r-[1px] border-r-gray-600">
           <Outlet/>
         </main>
     </div>

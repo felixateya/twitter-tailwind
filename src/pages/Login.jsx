@@ -13,8 +13,8 @@ const handleLogin  = (event)=>{
   login(email, password, navigate)
 }
   return (
-    <div className="flex h-svh w-full bg-black">
-      <form onSubmit={handleLogin} id="login-form" className="flex items-center justify-center flex-col gap-4 w-[50%] h-full">
+    <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
+      <form onSubmit={handleLogin} id="login-form" className="flex items-center justify-center flex-col gap-4 xl:w-1/2 w-full  h-full">
         <h2 className="text-5xl flex flex-col items-center text-white mt-2">
           <FaXTwitter /> <span className="text-3xl font-semibold mt-2">Log In</span>
         </h2>
@@ -35,14 +35,14 @@ const handleLogin  = (event)=>{
           placeholder="Enter your password"
         />
         <button type="submit" className="w-[60%] p-2 rounded-lg bg-white text-lg font-semibold text-black border-none hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out">
-          Sign Up
+          Log In
         </button>
         <div className="flex gap-4 justify-center items-center w-[90%]">
         <p className="text-white text-lg font-semibold">Don&apos;t have an account?</p>
         <Link className="text-blue-600 font- text-lg hover:text-blue-400 transition duration-200 ease-in-out"  to="/signup">Sign Up</Link>
         </div>
       </form>
-      <div className="w-[50%] h-full bg-[url(https://twitter-mwitu.vercel.app/Images/defcover.jpg)] bg-cover bg-right bg-no-repeat"></div>
+      <div className="xl:w-[50%]  w-full xl:block hidden bg-[url(/defcover.jpg)] m-4 rounded-md bg-cover bg-right bg-no-repeat"></div>
     </div>
   );
 };

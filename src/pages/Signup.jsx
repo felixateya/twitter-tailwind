@@ -15,11 +15,11 @@ const Signup = () => {
     signup(email, password, name, navigate);
   };
   return (
-    <div className="flex h-svh w-full bg-black">
-      <div className="w-[50%] h-full bg-[url(https://twitter-mwitu.vercel.app/Images/defcover.jpg)] bg-cover bg-right bg-no-repeat"></div>
+    <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
+      <div className="xl:w-[50%]  w-full xl:block hidden bg-[url(/defcover.jpg)] m-4 rounded-md bg-cover bg-right bg-no-repeat"></div>
       <form id="signup"
         onSubmit={handleSignup}
-        className="flex items-center justify-center flex-col gap-4 w-[50%] h-full"
+        className="flex items-center justify-center flex-col gap-4 xl:w-1/2 w-full  h-full"
       >
         <h2 className="text-5xl flex flex-col items-center text-white mt-2 text-center">
           <FaXTwitter />{" "}
