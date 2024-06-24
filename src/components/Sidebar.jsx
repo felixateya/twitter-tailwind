@@ -11,8 +11,8 @@ const Sidebar = () => {
       icon: <GoHome />,
     },
     {
-      to: "/search",
-      text: "Search",
+      to: "/explore",
+      text: "Explore",
       icon: <GoSearch />,
     },
     {
@@ -34,7 +34,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { signout } = useAuth();
   return (
-    <aside className="w-[23%] border-r-[1px] flex flex-col gap-6 xl:pl-10 pl-2 py-2 border-r-gray-600 h-full">
+    <aside className="w-[23%] border-r-[1px] fixed left-0 top-0 flex flex-col gap-6 xl:pl-10 pl-2 py-2 border-r-gray-600 h-full">
       <Link to='/' className="font-bold flex items-center text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200">
         <FaXTwitter />
       </Link>
