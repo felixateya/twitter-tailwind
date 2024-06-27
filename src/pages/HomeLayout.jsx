@@ -1,10 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { useAuth } from "../hooks/useAuth";
+
+
 
 const HomeLayout = () => {
-  const { user, isAuthenticated } = useAuth();
-  console.log(user, isAuthenticated);
   const location = useLocation();
   const path = location.pathname.replace("/", "");
   console.log(path)
@@ -20,6 +19,7 @@ const HomeLayout = () => {
           <Outlet />
         </main>
       </div>
+      
     </div>
   );
 };

@@ -2,8 +2,10 @@ import { FaRegEnvelope, FaRegUser, FaXTwitter } from "react-icons/fa6";
 import { GoBell, GoHome, GoSearch } from "react-icons/go";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useData } from "../hooks/useData";
 
 const Sidebar = () => {
+  const {user} = useData()
   const linkList = [
     {
       to: "/",
@@ -63,8 +65,8 @@ const Sidebar = () => {
           alt="profile-image"
         />
         <div>
-          <p className="text-lg text-white font-semibold">username</p>
-          <p className="text-gray-500 text-sm ">@username</p>
+          <p className="text-lg text-white font-semibold">{user}</p>
+          <p className="text-gray-500 text-sm ">@{user}</p>
         </div>
       </div>
     </aside>

@@ -1,13 +1,14 @@
 import TweetDisplay from "../components/TweetDisplay";
 import TweetForm from "../components/TweetForm";
+import { useData } from "../hooks/useData";
 
 const Home = () => {
-  const arr = [1, 2];
+  const{tweetList} = useData()
   return (
     <div>
       <TweetForm />
-      {arr.map((num) => (
-        <TweetDisplay key={num} />
+      {tweetList.map((tweet) => (
+        <TweetDisplay key={tweet.tweetId} tweet={tweet}/>
       ))}
     </div>
   );

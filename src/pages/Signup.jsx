@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 
+
 const Signup = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -34,14 +35,14 @@ const Signup = () => {
         />
         <input
           className="p-4 rounded-xl w-[80%] bg-transparent text-white placeholder:text-white border-slate-50 border-[1px]"
-          type="text"
+          type="email"
           id="email"
           placeholder="Enter your emial adrress"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           className="p-4 rounded-xl w-[80%] bg-transparent text-white placeholder:text-white border-slate-50 border-[1px]"
-          type="text"
+          type="password"
           id="password"
           placeholder="Enter your password"
           onChange={(e) => setPassword(e.target.value)}
@@ -64,6 +65,7 @@ const Signup = () => {
           </Link>
         </div>
       </form>
+      
     </div>
   );
 };

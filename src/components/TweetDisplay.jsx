@@ -1,20 +1,22 @@
+/* eslint-disable react/prop-types */
 import { FaRegComment, FaRetweet } from "react-icons/fa"
 import { IoIosHeartEmpty } from "react-icons/io"
 import { MdOutlineFileUpload } from "react-icons/md"
+import { useData } from "../hooks/useData"
 
-
-const TweetDisplay = () => {
+const TweetDisplay = ({tweet}) => {
+    const {user} = useData()
   return (
     <div className=" flex w-full h-max p-2 border-b-[1px] border-b-gray-500">
         <img className="w-16 h-16 rounded-full" src="/prof-image.jpg" alt="" />
         <div className="w-5/6">
             <div className="flex gap-2 items-center">
-                <p className="text-white font-semibold text-xl">username</p>
-                <p className="text-gray-500 text-xl">@username</p>
+                <p className="text-white font-semibold text-xl">{user}</p>
+                <p className="text-gray-500 text-xl">@{user}</p>
             </div>
             <div className="w-full">
-            <p className="text-white text-lg ">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-            <img className="w-[90%] h-[310px] m-2 rounded-lg" src="/photo-tweet.avif" alt="" />
+            <p className="text-white text-lg ">{tweet.tweet.text}</p>
+            <img className="w-[90%] h-[310px] m-2 rounded-lg" src={tweet.tweet.image} alt="" />
             </div>
             <div className="flex w-[95%] justify-between align-baseline">
                 <p className="text-2xl flex gap-2 items-center text-gray-500">

@@ -1,12 +1,24 @@
-
+import "../loader.css";
 
 const FullpageLoader = () => {
   return (
-    <div className="flex w-full h-screen bg-red-900">
-        <span className="w-14 h-14 rounded-full border-t-2 border-gray-400">
-  </span>
+    <div className="flex items-center justify-center w-full h-screen">
+      <div className="loader">
+        <div className="bar1"></div>
+        <div className="bar2"></div>
+        <div className="bar3"></div>
+        <div className="bar4"></div>
+        <div className="bar5"></div>
+        <div className="bar6"></div>
+        <div className="bar7"></div>
+        <div className="bar8"></div>
+        <div className="bar9"></div>
+        <div className="bar10"></div>
+        <div className="bar11"></div>
+        <div className="bar12"></div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FullpageLoader
+export default FullpageLoader;

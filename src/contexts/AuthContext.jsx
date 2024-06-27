@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -38,6 +39,7 @@ function reducer(state, action) {
         ...state,
         user: null,
         isAuthenticated: false,
+        isLoading: true,
       };
     default:
       throw new Error("Unknown action");
@@ -62,7 +64,9 @@ function AuthProvider({ children }) {
         name
       );
       const uid = userCredentials.user.uid;
-      
+      if (!email || !password || !name) {
+        toast.error("Please fill in all fields");
+      }
       const newUser = doc(collection(db, "users"));
       await setDoc(newUser, {
         username: name,
@@ -71,37 +75,41 @@ function AuthProvider({ children }) {
         timestamp: new Date().getTime(),
         profileImg: "",
       });
+      toast.success("Signup successful");
       dispatch({ type: "signup", payload: userCredentials.user });
       navigate("/");
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
     }
   };
-  const login =  (email, password, navigate) => {
-    
-       signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      ).then((userCredentials)=>{
-
-          const uid = userCredentials.user.uid;
-          console.log(uid);
-          console.log(userCredentials)
-          dispatch({ type: "login", action: userCredentials.user });
-          navigate("/");
-      }).catch((error)=>{
-        console.error(error);
+  const login = (email, password, navigate) => {
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+    }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const uid = userCredentials.user.uid;
+        console.log(uid);
+        console.log(userCredentials);
+        toast.success("login successful");
+        dispatch({ type: "login", action: userCredentials.user });
+        navigate("/");
       })
-    
+      .catch((error) => {
+        console.error(error);
+        toast.error(error.message);
+      });
   };
   const signout = async (navigate) => {
     try {
       await signOut(auth);
       navigate("/login");
-      console.log('success')
+      console.log("success");
+      toast.success("Successfully logged out");
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
     }
   };
   return (
@@ -117,6 +125,7 @@ function AuthProvider({ children }) {
       }}
     >
       {children}
+      <Toaster position="top-center" reverseOrder={false} />
     </AuthContext.Provider>
   );
 }
