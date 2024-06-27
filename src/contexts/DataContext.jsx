@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -5,6 +6,7 @@ import {
   doc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   setDoc,
   where,
@@ -27,7 +29,8 @@ const DataProvider = ({ children }) => {
   const [tweetPic, setTweetPic] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [picURL, setPicURL] = useState("");
-  const [tweetList, setTweetList] = useState([])
+  const [tweetList, setTweetList] = useState([]);
+  const [previewURL, setPreviewURL] = useState("");
 
   const auth = getAuth();
   const storage = getStorage(app);
@@ -56,6 +59,18 @@ const DataProvider = ({ children }) => {
 
     return () => unsubscribe(); // Clean up the listener on unmount
   }, [auth, db]);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setTweetPic(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const uploadImage = async (image) => {
     try {
@@ -99,6 +114,7 @@ const DataProvider = ({ children }) => {
       setTweetText("");
       setTweetPic(null);
       setPicURL("");
+      setPreviewURL("");
     } catch (error) {
       toast.error(error.message);
       console.error(error);
@@ -108,7 +124,7 @@ const DataProvider = ({ children }) => {
   const sendTweet = useCallback(
     async (e) => {
       e.preventDefault();
-
+      
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           try {
@@ -123,33 +139,28 @@ const DataProvider = ({ children }) => {
           }
         }
       });
-    },[auth, createTweet, picURL, tweetPic, tweetText, uploadImage])
-    
+    },
+    [auth, tweetText, tweetPic, picURL]
+  );
 
+  const fetchTweets = useCallback(async () => {
+    try {
+      let tweetItem = [];
+      const queryTweets = query(collection(db, "tweets"), orderBy('timestamp', 'desc'));
+      const tweetSnapshot = await getDocs(queryTweets);
 
-
-
-
-  const fetchTweets = useCallback(async()=>{
-    try{
-      let tweetItem = []
-      const queryTweets = query(
-        collection(db, 'tweets')
-      )
-      const tweetSnapshot = await getDocs(queryTweets)
-
-      tweetSnapshot.forEach((tweetDoc)=>{
-        tweetItem.push({...tweetDoc.data()})
-      })
-      setTweetList(tweetItem)
-    } 
-    catch(error){
+      tweetSnapshot.forEach((tweetDoc) => {
+        tweetItem.push({ ...tweetDoc.data() });
+      });
+      setTweetList(tweetItem);
+    } catch (error) {
       console.error(error);
     }
-  },[db])
-  useEffect(()=>{
-    fetchTweets()
-  },[fetchTweets, refresh])
+  }, [db]);
+
+  useEffect(() => {
+    fetchTweets();
+  }, [fetchTweets, refresh]);
 
   return (
     <DataContext.Provider
@@ -158,9 +169,12 @@ const DataProvider = ({ children }) => {
         sendTweet,
         tweet: { text: tweetText, image: picURL },
         setTweetText,
+        tweetText,
         setTweetPic,
         tweetPic,
-        tweetList
+        tweetList,
+        previewURL,
+        handleImageChange,
       }}
     >
       {children}
