@@ -31,6 +31,7 @@ const DataProvider = ({ children }) => {
   const [picURL, setPicURL] = useState("");
   const [tweetList, setTweetList] = useState([]);
   const [previewURL, setPreviewURL] = useState("");
+  
 
   const auth = getAuth();
   const storage = getStorage(app);
@@ -100,6 +101,7 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  
   const createTweet = async (user, tweetContent) => {
     try {
       const newTweet = doc(collection(db, "tweets"));
@@ -160,6 +162,7 @@ const DataProvider = ({ children }) => {
 
   useEffect(() => {
     fetchTweets();
+    
   }, [fetchTweets, refresh]);
 
   return (
@@ -174,6 +177,7 @@ const DataProvider = ({ children }) => {
         tweetPic,
         tweetList,
         previewURL,
+        setPreviewURL,
         handleImageChange,
       }}
     >
