@@ -93,7 +93,7 @@ function AuthProvider({ children }) {
         console.log(uid);
         console.log(userCredentials);
         toast.success("login successful");
-        dispatch({ type: "login", action: userCredentials.user });
+        dispatch({ type: "login", payload: userCredentials.user });
         navigate("/");
       })
       .catch((error) => {

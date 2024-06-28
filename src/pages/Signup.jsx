@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import FullpageLoader from "../components/FullpageLoader";
+import toast from "react-hot-toast";
 
 
 
@@ -11,10 +13,18 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSignup = (event) => {
+  const [loading, setLoading] = useState(false)
+  const handleSignup = async (event) => {
     event.preventDefault();
-    signup(email, password, name, navigate);
+    try{
+      setLoading(true)
+      await signup(email, password, name, navigate);
+    } catch(error){
+      setLoading(false)
+      toast.error(error.message)
+    }
   };
+  if(loading) return <FullpageLoader/>
   return (
     <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
       <div className="xl:w-[50%]  w-full xl:block hidden bg-[url(/defcover.jpg)] m-4 rounded-md bg-cover bg-right bg-no-repeat"></div>

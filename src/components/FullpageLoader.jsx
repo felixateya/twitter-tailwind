@@ -2,7 +2,7 @@ import "../loader.css";
 
 const FullpageLoader = () => {
   return (
-    <div className="flex items-center justify-center w-full h-screen">
+    <div className="flex items-center absolute bg-[#15202B] justify-center w-full h-screen">
       <div className="loader">
         <div className="bar1"></div>
         <div className="bar2"></div>

@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
 import { FaRegEnvelope, FaRegUser, FaXTwitter } from "react-icons/fa6";
 import { GoBell, GoHome, GoSearch } from "react-icons/go";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useData } from "../hooks/useData";
+import toast from "react-hot-toast";
 
-const Sidebar = () => {
-  const {user} = useData()
+const Sidebar = ({ setLoading }) => {
+  const { user } = useData();
   const linkList = [
     {
       to: "/",
@@ -33,11 +35,27 @@ const Sidebar = () => {
       icon: <FaRegUser />,
     },
   ];
+
   const navigate = useNavigate();
   const { signout } = useAuth();
+  const handleSignout = async () => {
+    try {
+      setLoading(true);
+      setTimeout(async () => {
+        await signout(navigate);
+      }, 3000);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <aside className="w-[23%] border-r-[1px] fixed left-0 top-0 flex flex-col gap-6 xl:pl-10 pl-2 py-2 border-r-gray-600 h-full">
-      <Link to='/' className="font-bold flex items-center text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200">
+      <Link
+        to="/"
+        className="font-bold flex items-center text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200"
+      >
         <FaXTwitter />
       </Link>
       <div className=" flex gap-4 flex-col">
@@ -53,7 +71,7 @@ const Sidebar = () => {
         ))}
       </div>
       <button
-        onClick={() => signout(navigate)}
+        onClick={handleSignout}
         className="bg-blue-600 hover:bg-blue-700 transition-600 text-xl font-semibold rounded-full p-4 text-white w-[80%]"
       >
         Log Out

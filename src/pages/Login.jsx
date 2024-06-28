@@ -2,16 +2,28 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
+import FullpageLoader from "../components/FullpageLoader";
+import toast from "react-hot-toast";
 const Login = () => {
 const {login} = useAuth()
 const navigate = useNavigate()
 const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
+const[loading, setLoading] = useState(false)
 
-const handleLogin  = (event)=>{
+const handleLogin  = async (event)=>{
   event.preventDefault()
-  login(email, password, navigate)
+  try{
+    setLoading(true)
+    await login(email, password, navigate)
+  }
+  catch(error){
+    setLoading(false)
+    toast.error(error.message)
+  }
+  
 }
+if(loading) return <FullpageLoader/>
   return (
     <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
       <form onSubmit={handleLogin} id="login-form" className="flex items-center justify-center flex-col gap-4 xl:w-1/2 w-full  h-full">
