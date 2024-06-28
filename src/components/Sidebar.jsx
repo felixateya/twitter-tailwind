@@ -42,7 +42,7 @@ const Sidebar = ({ setLoading }) => {
     try {
       setLoading(true);
       setTimeout(async () => {
-        await signout(navigate);
+        await signout(navigate, setLoading);
       }, 3000);
     } catch (error) {
       setLoading(false);

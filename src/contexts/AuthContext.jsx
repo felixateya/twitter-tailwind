@@ -53,7 +53,7 @@ function AuthProvider({ children }) {
   );
 
   const auth = getAuth();
-  const signup = async (email, password, name, navigate) => {
+  const signup = async (email, password, name, navigate, setLoading) => {
     const db = getFirestore(app);
 
     try {
@@ -79,11 +79,12 @@ function AuthProvider({ children }) {
       dispatch({ type: "signup", payload: userCredentials.user });
       navigate("/");
     } catch (error) {
+      setLoading(false)
       console.error(error);
       toast.error(error.message);
     }
   };
-  const login = (email, password, navigate) => {
+  const login = (email, password, navigate, setLoading) => {
     if (!email || !password) {
       toast.error("Please fill in all fields");
     }
@@ -97,17 +98,19 @@ function AuthProvider({ children }) {
         navigate("/");
       })
       .catch((error) => {
+        setLoading(false)
         console.error(error);
         toast.error(error.message);
       });
   };
-  const signout = async (navigate) => {
+  const signout = async (navigate, setLoading) => {
     try {
       await signOut(auth);
       navigate("/login");
       console.log("success");
       toast.success("Successfully logged out");
     } catch (error) {
+      setLoading(false)
       console.error(error);
       toast.error(error.message);
     }

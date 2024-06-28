@@ -18,7 +18,7 @@ const Signup = () => {
     event.preventDefault();
     try{
       setLoading(true)
-      await signup(email, password, name, navigate);
+      await signup(email, password, name, navigate, setLoading);
     } catch(error){
       setLoading(false)
       toast.error(error.message)

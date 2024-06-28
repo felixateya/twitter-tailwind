@@ -15,7 +15,7 @@ const handleLogin  = async (event)=>{
   event.preventDefault()
   try{
     setLoading(true)
-    await login(email, password, navigate)
+    await login(email, password, navigate, setLoading)
   }
   catch(error){
     setLoading(false)
