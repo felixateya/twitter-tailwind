@@ -5,7 +5,7 @@ import { useData } from "../hooks/useData";
 const Home = () => {
   const{tweetList} = useData()
   return (
-    <div>
+    <div className='h-full'>
       <TweetForm />
       {tweetList.map((tweet) => (
         <TweetDisplay key={tweet.tweetId} tweet={tweet}/>

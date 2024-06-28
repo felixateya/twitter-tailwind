@@ -7,7 +7,7 @@ import { useData } from "../hooks/useData"
 const TweetDisplay = ({tweet}) => {
     const {user} = useData()
   return (
-    <div className=" flex w-full h-max p-2 border-b-[1px] border-b-gray-500">
+    <div className=" flex w-full  h-full p-2 border-b-[1px] border-b-gray-500">
         <img className="w-16 h-16 rounded-full" src="/prof-image.jpg" alt="" />
         <div className="w-5/6">
             <div className="flex gap-2 items-center">
