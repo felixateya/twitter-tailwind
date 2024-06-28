@@ -9,7 +9,7 @@ const HomeLayout = () => {
   return (
     <div className="bg-[#15202B] relative w-full min-h-screen flex">
       <Sidebar />
-      <div className="w-[41%] ml-[23%] h-full flex flex-col ">
+      <div className="w-[48%] ml-[23%] h-full flex flex-col ">
         <h3 className="text-2xl font-bold text-left border-b-2 h-max p-2 border-b-gray-600 text-white capitalize">
           {path === "" ? "home" : path}
         </h3>
@@ -17,7 +17,7 @@ const HomeLayout = () => {
           <Outlet />
         </main>
       </div>
-      <div className="border-l-gray-600 border-l-[1px] w-[36%] min-h-screen"></div>
+      <div className="border-l-gray-600 border-l-[1px] w-[30%] min-h-screen"></div>
     </div>
   );
 };

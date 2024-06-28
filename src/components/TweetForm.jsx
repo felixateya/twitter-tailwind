@@ -36,15 +36,15 @@ const TweetForm = () => {
         ></textarea>
       </div>
       {previewURL && (
-        <div className=" ml-4 mb-4 w-[90%] h-[300px] relative">
+        <div className=" ml-4 mb-4 w-[90%] h-max relative">
           <p
             onClick={() => setPreviewURL("")}
-            className=" w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center absolute cursor-pointer right-3 top-1 text-white"
+            className=" w-8 h-8 rounded-full bg-gray-900 text-xl flex items-center justify-center absolute cursor-pointer right-[2px] top-[2px] text-white"
           >
             X
           </p>
           <img
-            className="w-full h-full rounded-md"
+            className="w-full h-[50vh] object-cover rounded-t-2xl"
             src={previewURL}
             alt="tweet-pic"
           />
