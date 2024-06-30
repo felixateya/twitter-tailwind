@@ -109,6 +109,8 @@ function AuthProvider({ children }) {
       navigate("/login");
       console.log("success");
       toast.success("Successfully logged out");
+      dispatch({type: 'logout'})
+      setLoading(false)
     } catch (error) {
       setLoading(false)
       console.error(error);

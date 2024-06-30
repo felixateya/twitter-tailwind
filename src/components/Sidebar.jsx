@@ -1,38 +1,46 @@
 /* eslint-disable react/prop-types */
 import { FaRegEnvelope, FaRegUser, FaXTwitter } from "react-icons/fa6";
-import { GoBell, GoHome, GoSearch } from "react-icons/go";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { GoBell, GoBellFill, GoHome, GoHomeFill, GoSearch } from "react-icons/go";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useData } from "../hooks/useData";
 import toast from "react-hot-toast";
+import { FaEnvelope, FaSearch, FaUser } from "react-icons/fa";
 
 const Sidebar = ({ setLoading }) => {
   const { user } = useData();
+  const location = useLocation()
+  const path = location.pathname
   const linkList = [
     {
       to: "/",
       text: "Home",
       icon: <GoHome />,
+      activeIcon: <GoHomeFill/>
     },
     {
       to: "/explore",
       text: "Explore",
       icon: <GoSearch />,
+      activeIcon: <FaSearch />
     },
     {
       to: "/notifications",
       text: "Notifications",
       icon: <GoBell />,
+      activeIcon: <GoBellFill/>
     },
     {
       to: "/messages",
       text: "Messages",
       icon: <FaRegEnvelope />,
+      activeIcon: <FaEnvelope/>
     },
     {
       to: "/profile",
       text: "Profile",
       icon: <FaRegUser />,
+      activeIcon: <FaUser/>
     },
   ];
 
@@ -63,9 +71,9 @@ const Sidebar = ({ setLoading }) => {
           <NavLink
             key={mylink.text}
             to={mylink.to}
-            className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-2 transition-600 hover:bg-white hover:font-semibold hover:text-black"
+            className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-1 transition-600 hover:bg-white hover:font-semibold hover:text-black"
           >
-            <p>{mylink.icon}</p>
+            <p className="text-3xl">{path === mylink.to ? mylink.activeIcon : mylink.icon}</p>
             <p className="hidden xl:block">{mylink.text}</p>
           </NavLink>
         ))}

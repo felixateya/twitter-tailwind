@@ -19,7 +19,7 @@ const TweetDisplay = ({tweet}) => {
             <p className="text-white py-2 text-lg ">{tweet.tweet.text}</p>
             {tweet.tweet.image &&<img className="w-[90%] h-[75vh] my-2 aspect-square rounded-lg" src={tweet.tweet?.image} alt="" />}
             </div>
-            <div className="flex w-full pl-16 justify-between align-baseline">
+            <div className="flex w-[90%] pl-16 justify-between align-baseline">
                 <p className="text-2xl flex gap-2 items-center text-gray-500">
                 < FaRegComment/>
                     <span className="text-gray-500">2</span>
