@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable react/prop-types */
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -106,7 +106,7 @@ const DataProvider = ({ children }) => {
     try {
       const newTweet = doc(collection(db, "tweets"));
       await setDoc(newTweet, {
-        userid: user.uid,
+        userid: user?.uid,
         tweet: tweetContent,
         tweetId: newTweet.id,
         timestamp: new Date().getTime(),
@@ -118,17 +118,17 @@ const DataProvider = ({ children }) => {
       setPicURL("");
       setPreviewURL("");
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
       console.error(error);
     }
   };
 
-  const sendTweet = useCallback(
+  const sendTweet = 
     async (e) => {
       e.preventDefault();
       
       onAuthStateChanged(auth, async (user) => {
-        if (user) {
+        // if (user) {
           try {
             let imageUrl = picURL;
             if (tweetPic) {
@@ -137,13 +137,12 @@ const DataProvider = ({ children }) => {
             }
             await createTweet(user, { text: tweetText, image: imageUrl });
           } catch (error) {
+            toast.error(error.message)
             console.error(error);
           }
-        }
+        // }
       });
-    },
-    [auth, tweetText, tweetPic, picURL]
-  );
+    }
 
   const fetchTweets = useCallback(async () => {
     try {
