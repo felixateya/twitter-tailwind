@@ -78,7 +78,7 @@ const Sidebar = ({ setLoading }) => {
           <NavLink
             key={mylink.text}
             to={mylink.to}
-            className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-1 transition-600 hover:bg-white hover:font-semibold hover:text-black"
+            className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-1 transition-600 hover:bg-gray-500 hover:font-semibold hover:text-black"
           >
             <p className="text-3xl">
               {path === mylink.to ? mylink.activeIcon : mylink.icon}
