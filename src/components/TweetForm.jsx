@@ -10,6 +10,7 @@ const TweetForm = () => {
     setTweetText,
     tweetText,
     sendTweet,
+    setTweetPic,
     setPreviewURL,
     handleImageChange,
     previewURL,
@@ -38,7 +39,10 @@ const TweetForm = () => {
       {previewURL && (
         <div className=" ml-4 mb-4 w-[90%] h-max relative">
           <p
-            onClick={() => setPreviewURL("")}
+            onClick={() => {
+              setTweetPic("");
+              setPreviewURL("");
+            }}
             className=" w-8 h-8 rounded-full bg-gray-900 text-xl flex items-center justify-center absolute cursor-pointer right-[2px] top-[2px] text-white"
           >
             X

@@ -1,46 +1,53 @@
 /* eslint-disable react/prop-types */
 import { FaRegEnvelope, FaRegUser, FaXTwitter } from "react-icons/fa6";
-import { GoBell, GoBellFill, GoHome, GoHomeFill, GoSearch } from "react-icons/go";
+import {
+  GoBell,
+  GoBellFill,
+  GoHome,
+  GoHomeFill,
+  GoSearch,
+} from "react-icons/go";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useData } from "../hooks/useData";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaSearch, FaUser } from "react-icons/fa";
+import { MiniLoader } from "./MiniLoader";
 
 const Sidebar = ({ setLoading }) => {
   const { user } = useData();
-  const location = useLocation()
-  const path = location.pathname
+  const location = useLocation();
+  const path = location.pathname;
   const linkList = [
     {
       to: "/",
       text: "Home",
       icon: <GoHome />,
-      activeIcon: <GoHomeFill/>
+      activeIcon: <GoHomeFill />,
     },
     {
       to: "/explore",
       text: "Explore",
       icon: <GoSearch />,
-      activeIcon: <FaSearch />
+      activeIcon: <FaSearch />,
     },
     {
       to: "/notifications",
       text: "Notifications",
       icon: <GoBell />,
-      activeIcon: <GoBellFill/>
+      activeIcon: <GoBellFill />,
     },
     {
       to: "/messages",
       text: "Messages",
       icon: <FaRegEnvelope />,
-      activeIcon: <FaEnvelope/>
+      activeIcon: <FaEnvelope />,
     },
     {
       to: "/profile",
       text: "Profile",
       icon: <FaRegUser />,
-      activeIcon: <FaUser/>
+      activeIcon: <FaUser />,
     },
   ];
 
@@ -73,7 +80,9 @@ const Sidebar = ({ setLoading }) => {
             to={mylink.to}
             className="text-2xl text-white font-normal rounded-full w-max py-2 px-4 flex items-center gap-1 transition-600 hover:bg-white hover:font-semibold hover:text-black"
           >
-            <p className="text-3xl">{path === mylink.to ? mylink.activeIcon : mylink.icon}</p>
+            <p className="text-3xl">
+              {path === mylink.to ? mylink.activeIcon : mylink.icon}
+            </p>
             <p className="hidden xl:block">{mylink.text}</p>
           </NavLink>
         ))}
@@ -90,10 +99,14 @@ const Sidebar = ({ setLoading }) => {
           src="/prof-image.jpg"
           alt="profile-image"
         />
-        <div>
-          <p className="text-lg text-white font-semibold">{user}</p>
-          <p className="text-gray-500 text-sm ">@{user}</p>
-        </div>
+        {user ? (
+          <div>
+            <p className="text-lg text-white font-semibold">{user}</p>
+            <p className="text-gray-500 text-sm ">@{user}</p>
+          </div>
+        ) : (
+          <MiniLoader />
+        )}
       </div>
     </aside>
   );

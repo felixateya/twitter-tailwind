@@ -1,4 +1,3 @@
-
 /* eslint-disable react/prop-types */
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -31,7 +30,6 @@ const DataProvider = ({ children }) => {
   const [picURL, setPicURL] = useState("");
   const [tweetList, setTweetList] = useState([]);
   const [previewURL, setPreviewURL] = useState("");
-  
 
   const auth = getAuth();
   const storage = getStorage(app);
@@ -101,7 +99,6 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  
   const createTweet = async (user, tweetContent) => {
     try {
       const newTweet = doc(collection(db, "tweets"));
@@ -112,42 +109,44 @@ const DataProvider = ({ children }) => {
         timestamp: new Date().getTime(),
       });
       toast.success("Tweet sent successfully");
-      setRefresh((prev) => !prev);
-      setTweetText("");
-      setTweetPic(null);
-      setPicURL("");
-      setPreviewURL("");
     } catch (error) {
       // toast.error(error.message);
       console.error(error);
     }
   };
 
-  const sendTweet = 
-    async (e) => {
-      e.preventDefault();
-      
-      onAuthStateChanged(auth, async (user) => {
-        // if (user) {
-          try {
-            let imageUrl = picURL;
-            if (tweetPic) {
-              imageUrl = await uploadImage(tweetPic);
-              setPicURL(imageUrl);
-            }
-            await createTweet(user, { text: tweetText, image: imageUrl });
-          } catch (error) {
-            toast.error(error.message)
-            console.error(error);
-          }
-        // }
-      });
-    }
+  const sendTweet = async (e) => {
+    e.preventDefault();
+
+    onAuthStateChanged(auth, async (user) => {
+      // if (user) {
+      try {
+        let imageUrl = picURL;
+        if (tweetPic) {
+          imageUrl = await uploadImage(tweetPic);
+          setPicURL(imageUrl);
+        }
+        await createTweet(user, { text: tweetText, image: imageUrl });
+        setRefresh((prev) => !prev);
+        setTweetText("");
+        setTweetPic(null);
+        setPicURL("");
+        setPreviewURL("");
+      } catch (error) {
+        toast.error(error.message);
+        console.error(error);
+      }
+      // }
+    });
+  };
 
   const fetchTweets = useCallback(async () => {
     try {
       let tweetItem = [];
-      const queryTweets = query(collection(db, "tweets"), orderBy('timestamp', 'desc'));
+      const queryTweets = query(
+        collection(db, "tweets"),
+        orderBy("timestamp", "desc")
+      );
       const tweetSnapshot = await getDocs(queryTweets);
 
       tweetSnapshot.forEach((tweetDoc) => {
@@ -161,7 +160,6 @@ const DataProvider = ({ children }) => {
 
   useEffect(() => {
     fetchTweets();
-    
   }, [fetchTweets, refresh]);
 
   return (
