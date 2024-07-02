@@ -17,7 +17,7 @@ const TweetDisplay = ({tweet}) => {
         </div>
             <div className="w-full h-max pl-16">
             <p className="text-white py-2 text-lg ">{tweet.tweet.text}</p>
-            {tweet.tweet.image &&<img className="w-[90%] h-[75vh] my-2 aspect-square rounded-lg" src={tweet.tweet?.image} alt="" />}
+            {tweet.tweet.image &&<img className="w-full h-96  my-2 aspect-auto rounded-xl" src={tweet.tweet?.image} alt="" />}
             </div>
             <div className="flex w-[90%] pl-16 justify-between align-baseline">
                 <p className="text-2xl flex gap-2 items-center text-gray-500">
