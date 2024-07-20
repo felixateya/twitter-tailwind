@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import FullpageLoader from "../components/FullpageLoader";
 import toast from "react-hot-toast";
+import bgImage from '../assets/defcover.jpg'
 
 
 
@@ -27,7 +28,7 @@ const Signup = () => {
   if(loading) return <FullpageLoader/>
   return (
     <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
-      <div className="xl:w-[50%]  w-full xl:block hidden bg-[url(/defcover.jpg)] m-4 rounded-md bg-cover bg-right bg-no-repeat"></div>
+      <img src={bgImage} alt="bgcover"  className={`xl:w-[50%]  w-full xl:block hidden  m-4 rounded-md object-right object-cover`}/>
       <form id="signup"
         onSubmit={handleSignup}
         className="flex items-center justify-center flex-col gap-4 xl:w-1/2 w-full  h-full"

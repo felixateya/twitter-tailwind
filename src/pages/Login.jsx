@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import FullpageLoader from "../components/FullpageLoader";
 import toast from "react-hot-toast";
+import bgImage from '../assets/defcover.jpg'
 const Login = () => {
 const {login} = useAuth()
 const navigate = useNavigate()
@@ -54,7 +55,7 @@ if(loading) return <FullpageLoader/>
         <Link className="text-blue-600 font- text-lg hover:text-blue-400 transition duration-200 ease-in-out"  to="/signup">Sign Up</Link>
         </div>
       </form>
-      <div className="xl:w-[50%]  w-full xl:block hidden bg-[url(/defcover.jpg)] m-4 rounded-md bg-cover bg-right bg-no-repeat"></div>
+      <img src={bgImage} alt="bgcover"  className={`xl:w-[50%]  w-full xl:block hidden  m-4 rounded-md object-right object-cover`}/>
     </div>
   );
 };
