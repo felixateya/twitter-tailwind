@@ -5,6 +5,7 @@ import {
   doc,
   getDocs,
   getFirestore,
+  onSnapshot,
   orderBy,
   query,
   setDoc,
@@ -19,6 +20,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+
 
 const DataContext = createContext();
 
@@ -141,27 +143,32 @@ const DataProvider = ({ children }) => {
     // });
   };
 
-  const fetchTweets = useCallback(async () => {
-    try {
-      let tweetItem = [];
-      const queryTweets = query(
-        collection(db, "tweets"),
-        orderBy("timestamp", "desc")
-      );
-      const tweetSnapshot = await getDocs(queryTweets);
+  
 
-      tweetSnapshot.forEach((tweetDoc) => {
-        tweetItem.push({ ...tweetDoc.data() });
-      });
-      setTweetList(tweetItem);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [db]);
+const fetchTweets = useCallback(() => {
+  const queryTweets = query(
+    collection(db, "tweets"),
+    orderBy("timestamp", "desc")
+  );
 
-  useEffect(() => {
-    fetchTweets();
-  }, [fetchTweets, refresh]);
+  const unsubscribe = onSnapshot(queryTweets, (snapshot) => {
+    const tweetItem = [];
+    snapshot.forEach((tweetDoc) => {
+      tweetItem.push(tweetDoc.data());
+    });
+    setTweetList(tweetItem);
+  }, (error) => {
+    console.error("Error fetching tweets:", error);
+  });
+
+  return unsubscribe; // To unsubscribe when the component unmounts
+}, [db]);
+
+useEffect(() => {
+  const unsubscribe = fetchTweets();
+  return () => unsubscribe(); // Cleanup subscription on unmount
+}, [fetchTweets, refresh]);
+
 
   return (
     <DataContext.Provider
