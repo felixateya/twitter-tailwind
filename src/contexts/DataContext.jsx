@@ -21,7 +21,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
-
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
@@ -73,6 +72,30 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  const fetchTweets = useCallback(() => {
+    const queryTweets = query(
+      collection(db, "tweets"),
+      orderBy("timestamp", "desc")
+    );
+
+    const unsubscribe = onSnapshot(queryTweets, (snapshot) => {
+      const tweetItem = [];
+      snapshot.forEach((tweetDoc) => {
+        tweetItem.push(tweetDoc.data());
+      });
+      setTweetList(tweetItem);
+    }, (error) => {
+      console.error("Error fetching tweets:", error);
+    });
+
+    return unsubscribe; // To unsubscribe when the component unmounts
+  }, [db]);
+
+  useEffect(() => {
+    const unsubscribe = fetchTweets();
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, [fetchTweets, refresh]);
+
   const uploadImage = async (image) => {
     try {
       const storageRef = ref(
@@ -119,10 +142,8 @@ const DataProvider = ({ children }) => {
 
   const sendTweet = async (e) => {
     e.preventDefault();
-
-    // onAuthStateChanged(auth, async (user) => {
-      // if (user) {
-      const user = auth.currentUser
+    const user = auth.currentUser;
+    if (user) {
       try {
         let imageUrl = picURL;
         if (tweetPic) {
@@ -130,7 +151,7 @@ const DataProvider = ({ children }) => {
           setPicURL(imageUrl);
         }
         await createTweet(user, { text: tweetText, image: imageUrl });
-        setRefresh((prev) => !prev);
+        setRefresh((prev) => !prev); // Toggle refresh to trigger useEffect
         setTweetText("");
         setTweetPic(null);
         setPicURL("");
@@ -139,36 +160,8 @@ const DataProvider = ({ children }) => {
         toast.error(error.message);
         console.error(error);
       }
-      // }
-    // });
+    }
   };
-
-  
-
-const fetchTweets = useCallback(() => {
-  const queryTweets = query(
-    collection(db, "tweets"),
-    orderBy("timestamp", "desc")
-  );
-
-  const unsubscribe = onSnapshot(queryTweets, (snapshot) => {
-    const tweetItem = [];
-    snapshot.forEach((tweetDoc) => {
-      tweetItem.push(tweetDoc.data());
-    });
-    setTweetList(tweetItem);
-  }, (error) => {
-    console.error("Error fetching tweets:", error);
-  });
-
-  return unsubscribe; // To unsubscribe when the component unmounts
-}, [db]);
-
-useEffect(() => {
-  const unsubscribe = fetchTweets();
-  return () => unsubscribe(); // Cleanup subscription on unmount
-}, [fetchTweets, refresh]);
-
 
   return (
     <DataContext.Provider
