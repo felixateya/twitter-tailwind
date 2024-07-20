@@ -26,7 +26,7 @@ const handleLogin  = async (event)=>{
 }
 if(loading) return <FullpageLoader/>
   return (
-    <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
+    <div className="flex flex-col lg:flex-row h-svh w-full bg-black">
       <form onSubmit={handleLogin} id="login-form" className="flex items-center justify-center flex-col gap-4 xl:w-1/2 w-full  h-full">
         <h2 className="text-5xl flex flex-col items-center text-white mt-2">
           <FaXTwitter /> <span className="text-3xl font-semibold mt-2">Log In</span>

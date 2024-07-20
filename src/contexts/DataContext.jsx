@@ -103,14 +103,14 @@ const DataProvider = ({ children }) => {
     try {
       const newTweet = doc(collection(db, "tweets"));
       await setDoc(newTweet, {
-        userid: user?.uid,
+        userid: user.uid,
         tweet: tweetContent,
         tweetId: newTweet.id,
         timestamp: new Date().getTime(),
       });
       toast.success("Tweet sent successfully");
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.message);
       console.error(error);
     }
   };
@@ -118,8 +118,9 @@ const DataProvider = ({ children }) => {
   const sendTweet = async (e) => {
     e.preventDefault();
 
-    onAuthStateChanged(auth, async (user) => {
+    // onAuthStateChanged(auth, async (user) => {
       // if (user) {
+      const user = auth.currentUser
       try {
         let imageUrl = picURL;
         if (tweetPic) {
@@ -137,7 +138,7 @@ const DataProvider = ({ children }) => {
         console.error(error);
       }
       // }
-    });
+    // });
   };
 
   const fetchTweets = useCallback(async () => {

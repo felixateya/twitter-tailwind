@@ -27,7 +27,7 @@ const Signup = () => {
   };
   if(loading) return <FullpageLoader/>
   return (
-    <div className="flex flex-col lg:flex-row h-svh w-full bg-[#15202B]">
+    <div className="flex flex-col lg:flex-row h-svh w-full bg-black">
       <img src={bgImage} alt="bgcover"  className={`xl:w-[50%]  w-full xl:block hidden  m-4 rounded-md object-right object-cover`}/>
       <form id="signup"
         onSubmit={handleSignup}

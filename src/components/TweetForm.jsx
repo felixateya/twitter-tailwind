@@ -1,6 +1,6 @@
 import { CiCirclePlus } from "react-icons/ci";
 import { FaCircleNotch, FaRegSmile } from "react-icons/fa";
-import { IoImageOutline } from "react-icons/io5";
+import { IoClose, IoImageOutline } from "react-icons/io5";
 import { MdOutlineGifBox } from "react-icons/md";
 import { PiChartBarHorizontal } from "react-icons/pi";
 import { useData } from "../hooks/useData";
@@ -15,6 +15,7 @@ const TweetForm = () => {
     handleImageChange,
     previewURL,
   } = useData();
+  
   return (
     <form
       onSubmit={sendTweet}
@@ -45,7 +46,7 @@ const TweetForm = () => {
             }}
             className=" w-8 h-8 rounded-full bg-gray-900 text-xl flex items-center justify-center absolute cursor-pointer right-[2px] top-[2px] text-white"
           >
-            X
+            <IoClose/>
           </p>
           <img
             className="w-full h-[50vh] object-cover rounded-t-2xl"

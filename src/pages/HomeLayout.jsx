@@ -10,7 +10,7 @@ const HomeLayout = () => {
   const [loading, setLoading] = useState(false)
 if(loading) return <FullpageLoader/>
   return (
-    <div className="bg-[#15202B] relative w-full min-h-screen flex">
+    <div className="bg-black relative w-full min-h-screen flex">
       <Sidebar setLoading={setLoading} loading={loading}/>
       <div className="w-[48%] ml-[23%] h-full flex flex-col ">
         <h3 className="text-2xl font-bold text-left border-b-2 h-max p-2 border-b-gray-600 text-white capitalize">

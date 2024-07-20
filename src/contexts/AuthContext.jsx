@@ -39,7 +39,6 @@ function reducer(state, action) {
         ...state,
         user: null,
         isAuthenticated: false,
-        isLoading: true,
       };
     default:
       throw new Error("Unknown action");
@@ -114,7 +113,7 @@ function AuthProvider({ children }) {
     } catch (error) {
       setLoading(false)
       console.error(error);
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
   return (
