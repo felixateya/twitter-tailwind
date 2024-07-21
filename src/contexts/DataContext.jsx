@@ -3,13 +3,12 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   doc,
-  getDocs,
+  getDoc,
   getFirestore,
   onSnapshot,
   orderBy,
   query,
   setDoc,
-  where,
 } from "firebase/firestore";
 import { createContext, useEffect, useState, useCallback } from "react";
 import { app } from "../firebase";
@@ -27,37 +26,48 @@ const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [tweetText, setTweetText] = useState("");
   const [tweetPic, setTweetPic] = useState(null);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
   const [picURL, setPicURL] = useState("");
   const [tweetList, setTweetList] = useState([]);
   const [previewURL, setPreviewURL] = useState("");
+  const [error, setError] = useState("");
 
   const auth = getAuth();
+  console.log(auth.currentUser?.uid);
   const storage = getStorage(app);
   const db = getFirestore(app);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const queryDocument = query(
-            collection(db, "users"),
-            where("userid", "==", user.uid)
-          );
-          const querySnapshot = await getDocs(queryDocument);
-          querySnapshot.forEach((userDoc) => {
-            const username = userDoc.data().username;
-            setUser(username);
-            console.log(username);
-          });
-        } catch (error) {
-          console.error(error);
-          toast.error("Failed to fetch user data");
-        }
+  const fetchUser = async (userid) => {
+    try {
+      if (!userid) {
+        throw new Error("User ID is required");
       }
-    });
 
-    return () => unsubscribe(); // Clean up the listener on unmount
+      const userDocRef = doc(db, "users", userid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData;
+      } else {
+        console.log("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      onAuthStateChanged(auth, async (user) => {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        const userData = userDoc.data();
+        setUser(userData.username);
+      });
+    };
+    getUser();
   }, [auth, db]);
 
   const handleImageChange = (e) => {
@@ -78,15 +88,20 @@ const DataProvider = ({ children }) => {
       orderBy("timestamp", "desc")
     );
 
-    const unsubscribe = onSnapshot(queryTweets, (snapshot) => {
-      const tweetItem = [];
-      snapshot.forEach((tweetDoc) => {
-        tweetItem.push(tweetDoc.data());
-      });
-      setTweetList(tweetItem);
-    }, (error) => {
-      console.error("Error fetching tweets:", error);
-    });
+    const unsubscribe = onSnapshot(
+      queryTweets,
+      (snapshot) => {
+        const tweetItem = [];
+        snapshot.forEach((tweetDoc) => {
+          tweetItem.push(tweetDoc.data());
+        });
+        setTweetList(tweetItem);
+      },
+      (error) => {
+        console.error("Error fetching tweets:", error);
+        setError("Error fecthing Tweets");
+      }
+    );
 
     return unsubscribe; // To unsubscribe when the component unmounts
   }, [db]);
@@ -94,7 +109,7 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = fetchTweets();
     return () => unsubscribe(); // Cleanup subscription on unmount
-  }, [fetchTweets, refresh]);
+  }, [fetchTweets]);
 
   const uploadImage = async (image) => {
     try {
@@ -120,6 +135,7 @@ const DataProvider = ({ children }) => {
       });
     } catch (error) {
       toast.error(error.message);
+      setError("Error uploading image");
       throw error;
     }
   };
@@ -133,7 +149,6 @@ const DataProvider = ({ children }) => {
         tweetId: newTweet.id,
         timestamp: new Date().getTime(),
       });
-      toast.success("Tweet sent successfully");
     } catch (error) {
       toast.error(error.message);
       console.error(error);
@@ -150,15 +165,17 @@ const DataProvider = ({ children }) => {
           imageUrl = await uploadImage(tweetPic);
           setPicURL(imageUrl);
         }
-        await createTweet(user, { text: tweetText, image: imageUrl });
-        setRefresh((prev) => !prev); // Toggle refresh to trigger useEffect
+
         setTweetText("");
         setTweetPic(null);
         setPicURL("");
         setPreviewURL("");
+        await createTweet(user, { text: tweetText, image: imageUrl });
+        toast.success("Tweet sent successfully");
       } catch (error) {
         toast.error(error.message);
         console.error(error);
+        setError("Error sending tweet");
       }
     }
   };
@@ -167,6 +184,7 @@ const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         user,
+        fetchUser,
         sendTweet,
         tweet: { text: tweetText, image: picURL },
         setTweetText,
@@ -177,6 +195,7 @@ const DataProvider = ({ children }) => {
         previewURL,
         setPreviewURL,
         handleImageChange,
+        error,
       }}
     >
       {children}

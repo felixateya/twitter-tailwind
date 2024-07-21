@@ -4,16 +4,16 @@ import { useData } from "../hooks/useData";
 import { MiniLoader } from "../components/MiniLoader";
 
 const Home = () => {
-  const{tweetList} = useData()
-  return (
-    <div className='h-full'>
-      <TweetForm />
-        {!tweetList && <MiniLoader/>}
-      {tweetList.map((tweet) => (
+  const { tweetList, error } = useData();
 
-        <TweetDisplay key={tweet.tweetId} tweet={tweet}/>
+  return (
+    <div className="h-full">
+      <TweetForm />
+      {!tweetList && !error && <MiniLoader />}
+      {error && <h3 className="text-white text-2xl">{error}</h3>}
+      {tweetList.map((mytweet) => (
+        <TweetDisplay key={mytweet.tweetId} tweet={mytweet} />
       ))}
-        
     </div>
   );
 };

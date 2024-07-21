@@ -9,13 +9,14 @@ import {
 } from "react-icons/go";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { useData } from "../hooks/useData";
+
 import toast from "react-hot-toast";
 import { FaEnvelope, FaSearch, FaUser } from "react-icons/fa";
-import { MiniLoader } from "./MiniLoader";
+import { useData } from "../hooks/useData";
+
 
 const Sidebar = ({ setLoading }) => {
-  const { user } = useData();
+  const {user} = useData()
   const location = useLocation();
   const path = location.pathname;
   const linkList = [
@@ -99,14 +100,18 @@ const Sidebar = ({ setLoading }) => {
           src="/prof-image.jpg"
           alt="profile-image"
         />
-        {user ? (
+        {/* {user ? (
           <div>
             <p className="text-lg text-white font-semibold">{user}</p>
             <p className="text-gray-500 text-sm ">@{user}</p>
           </div>
         ) : (
           <MiniLoader />
-        )}
+        )} */}
+        <div>
+            <p className="text-lg text-white font-semibold">{user}</p>
+            <p className="text-gray-500 text-sm ">@{user}</p>
+          </div>
       </div>
     </aside>
   );

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import {doc, getFirestore, setDoc } from "firebase/firestore";
 import { createContext, useReducer } from "react";
 import { app } from "../firebase";
 import {
@@ -66,7 +66,7 @@ function AuthProvider({ children }) {
       if (!email || !password || !name) {
         toast.error("Please fill in all fields");
       }
-      const newUser = doc(collection(db, "users"));
+      const newUser = doc(db, "users", uid);
       await setDoc(newUser, {
         username: name,
         email: email,
