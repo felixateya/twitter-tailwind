@@ -14,7 +14,7 @@ function EditProfile() {
     setOpen(!open);
   };
   return (
-    <>
+    <div>
       <button
         onClick={handleOpen}
         className="border-[1px] border-gray-600 py-2 px-4 rounded-full absolute mt-4 right-6 font-semibold"
@@ -73,7 +73,7 @@ function EditProfile() {
           </div>
         </DialogBody>
       </Dialog>
-    </>
+    </div>
   );
 }
 

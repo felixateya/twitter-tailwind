@@ -14,8 +14,8 @@ const Profile = () => {
     <div className="h-screen w-full">
     <UserProfile/>
     {myTweets.map((tweet)=>(
-      <div key={tweet.tweetId} className="mt-4 pb-4">
-      <div className="flex w-full flex-col h-full p-2 border-b-[1px] border-b-gray-500">
+      <div key={tweet.tweetId} className="mt-4">
+      <div className="flex w-full flex-col h-full p-2 pb-6 border-b-[1px] border-b-gray-500">
       <div className="w-max flex gap-2">
         <img className="w-16 h-16 rounded-full" src="/prof-image.jpg" alt="" />
         <div className="flex gap-2 items-center">
