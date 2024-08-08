@@ -4,6 +4,7 @@ import { IoClose, IoImageOutline } from "react-icons/io5";
 import { MdOutlineGifBox } from "react-icons/md";
 import { PiChartBarHorizontal } from "react-icons/pi";
 import { useData } from "../hooks/useData";
+import { Tooltip } from "@material-tailwind/react";
 
 const TweetForm = () => {
   const {
@@ -15,7 +16,7 @@ const TweetForm = () => {
     handleImageChange,
     previewURL,
   } = useData();
-  
+
   return (
     <form
       onSubmit={sendTweet}
@@ -46,7 +47,7 @@ const TweetForm = () => {
             }}
             className=" w-8 h-8 rounded-full bg-gray-900 text-xl flex items-center justify-center absolute cursor-pointer right-[2px] top-[2px] text-white"
           >
-            <IoClose/>
+            <IoClose />
           </p>
           <img
             className="w-full h-[50vh] object-cover rounded-t-2xl"
@@ -56,7 +57,7 @@ const TweetForm = () => {
         </div>
       )}
       <div className="flex ml-[90px] w-5/6 justify-between px-2">
-        <div className="flex gap-4 w-1/2 items-center ">
+        <div className="flex gap-4 w-1/2 items-center">
           <input
             className="hidden"
             onChange={handleImageChange}
@@ -64,9 +65,15 @@ const TweetForm = () => {
             name=""
             id="tweet-pic"
           />
-          <label className="cursor-pointer" htmlFor="tweet-pic">
-            <IoImageOutline className="text-blue-500 font-normal text-[27px]" />
-          </label>
+          <Tooltip
+            content="Media"
+            placement="bottom"
+            className="bg-gray-800 text-white rounded-md p-2"
+          >
+            <label className="cursor-pointer" htmlFor="tweet-pic">
+              <IoImageOutline className="text-blue-500 font-normal text-[27px]" />
+            </label>
+          </Tooltip>
           <MdOutlineGifBox className="text-blue-500 font-normal text-[27px]" />
           <PiChartBarHorizontal className="text-blue-500 font-normal text-[27px]" />
           <FaRegSmile className="text-blue-500 font-normal text-[27px]" />

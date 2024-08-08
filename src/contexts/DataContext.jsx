@@ -33,10 +33,10 @@ const DataProvider = ({ children }) => {
   const [error, setError] = useState("");
 
   const auth = getAuth();
-  console.log(auth.currentUser?.uid);
+  const theUserId = auth.currentUser?.uid
   const storage = getStorage(app);
   const db = getFirestore(app);
-
+//* fetching userData based on userid
   const fetchUser = async (userid) => {
     try {
       if (!userid) {
@@ -58,6 +58,8 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  
+//* fetching logged in user's data
   useEffect(() => {
     const getUser = async () => {
       onAuthStateChanged(auth, async (user) => {
@@ -70,6 +72,7 @@ const DataProvider = ({ children }) => {
     getUser();
   }, [auth, db]);
 
+  //* Handling image upload
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -82,6 +85,7 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  //* fetching all tweets from firestore database
   const fetchTweets = useCallback(() => {
     const queryTweets = query(
       collection(db, "tweets"),
@@ -110,7 +114,7 @@ const DataProvider = ({ children }) => {
     const unsubscribe = fetchTweets();
     return () => unsubscribe(); // Cleanup subscription on unmount
   }, [fetchTweets]);
-
+//* Handling image upload to firebase storage
   const uploadImage = async (image) => {
     try {
       const storageRef = ref(
@@ -140,6 +144,7 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  //* Creating a new tweet object
   const createTweet = async (user, tweetContent) => {
     try {
       const newTweet = doc(collection(db, "tweets"));
@@ -154,7 +159,7 @@ const DataProvider = ({ children }) => {
       console.error(error);
     }
   };
-
+//* Sending the tweet object together with the tweetImage if one exists
   const sendTweet = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -183,10 +188,10 @@ const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
-        user,
+      user,
         fetchUser,
         sendTweet,
-        tweet: { text: tweetText, image: picURL },
+        // tweet: { text: tweetText, image: picURL },
         setTweetText,
         tweetText,
         setTweetPic,
@@ -196,6 +201,7 @@ const DataProvider = ({ children }) => {
         setPreviewURL,
         handleImageChange,
         error,
+        theUserId
       }}
     >
       {children}

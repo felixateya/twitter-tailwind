@@ -10,7 +10,7 @@ const Home = () => {
     <div className="h-full">
       <TweetForm />
       {!tweetList && !error && <MiniLoader />}
-      {error && <h3 className="text-white text-2xl">{error}</h3>}
+      {error && <h3 className="text-red-500 text-2xl">{error}</h3>}
       {tweetList.map((mytweet) => (
         <TweetDisplay key={mytweet.tweetId} tweet={mytweet} />
       ))}

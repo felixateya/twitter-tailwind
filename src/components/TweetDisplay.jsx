@@ -1,40 +1,38 @@
-/* eslint-disable react/prop-types */
+
 import { FaRegComment, FaRetweet } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useData } from "../hooks/useData";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 const TweetDisplay = ({ tweet }) => {
-
   const { fetchUser } = useData();
   const [user, setUser] = useState("");
+
   useEffect(() => {
     const getData = async () => {
       const userData = await fetchUser(tweet.userid);
-      if (userData) {
-        setUser(userData.username);
-      } else {
-        setUser("");
-      }
+      setUser(userData?.username || "");
     };
-    getData(); // Call the getData function
-  }, [tweet, fetchUser]);
-  
+
+    getData();
+  }, [tweet.userid, fetchUser]);
+
   return (
-    <div className=" flex w-full flex-col  h-full p-2 border-b-[1px] border-b-gray-500">
+    <div className="flex w-full flex-col h-full p-2 border-b-[1px] border-b-gray-500">
       <div className="w-max flex gap-2">
         <img className="w-16 h-16 rounded-full" src="/prof-image.jpg" alt="" />
         <div className="flex gap-2 items-center">
           <p className="text-white font-semibold text-xl">{user}</p>
-          <p className="text-gray-500 text-xl">@{user}</p>
+          <p className="text-gray-500 text-xl">{`@${user}`}</p>
         </div>
       </div>
       <div className="w-full h-max pl-16">
         <p className="text-white py-2 text-lg ">{tweet.tweet.text}</p>
         {tweet.tweet.image && (
           <img
-            className="w-full h-96  my-2 aspect-auto rounded-xl"
+            className="w-full h-[70vh] my-2 aspect-auto rounded-xl"
             src={tweet.tweet?.image}
             alt=""
           />
@@ -59,6 +57,16 @@ const TweetDisplay = ({ tweet }) => {
       </div>
     </div>
   );
+}
+
+TweetDisplay.propTypes = {
+  tweet: PropTypes.shape({
+    userid: PropTypes.string.isRequired,
+    tweet: PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      image: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default TweetDisplay;
