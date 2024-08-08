@@ -12,7 +12,7 @@ const UserProfile = () => {
   const myTweets = tweetList.filter((tweet)=> tweet.userid === theUserId)
   const tweetlength = myTweets.length
   return (
-    <div className="text-white relative">
+    <div className="text-white relative w-full border-b-white">
       <div className="px-4 py-2 flex gap-3 items-center">
         <Tooltip content="Back" className="bg-gray-800 mt-2 text-white rounded-md p-2">
 
