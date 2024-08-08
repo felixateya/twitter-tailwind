@@ -14,7 +14,7 @@ function EditProfile() {
     setOpen(!open);
   };
   return (
-    <div>
+    <>
       <button
         onClick={handleOpen}
         className="border-[1px] border-gray-600 py-2 px-4 rounded-full absolute mt-4 right-6 font-semibold"
@@ -24,8 +24,8 @@ function EditProfile() {
       <Dialog
         open={open}
         handler={handleOpen}
-        size={"sm"}
-        className="bg-black text-white w-1/2 h-3/4 overflow-auto"
+        size="lg"
+        className="bg-black text-white h-3/4  overflow-auto"
       >
         <DialogHeader className="flex justify-between px-4">
           <button
@@ -73,7 +73,7 @@ function EditProfile() {
           </div>
         </DialogBody>
       </Dialog>
-    </div>
+    </>
   );
 }
 
