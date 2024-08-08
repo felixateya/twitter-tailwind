@@ -10,7 +10,10 @@ import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
 
+
 const App = () => {
+
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +25,7 @@ const App = () => {
             <Route path="explore" element={<Explore />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="messages" element={<Messages />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path=":userId" element={<Profile />} />
           </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />

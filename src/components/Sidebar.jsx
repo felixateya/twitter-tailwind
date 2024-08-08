@@ -16,9 +16,10 @@ import { useData } from "../hooks/useData";
 
 
 const Sidebar = ({ setLoading }) => {
-  const {user} = useData()
+  const {user, theUserId} = useData()
   const location = useLocation();
   const path = location.pathname;
+  
   const linkList = [
     {
       to: "/",
@@ -45,7 +46,7 @@ const Sidebar = ({ setLoading }) => {
       activeIcon: <FaEnvelope />,
     },
     {
-      to: "/profile",
+      to: `/${theUserId}`,
       text: "Profile",
       icon: <FaRegUser />,
       activeIcon: <FaUser />,

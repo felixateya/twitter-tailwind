@@ -3,13 +3,17 @@ import UserProfile from "../components/UserProfile"
 import { useData } from "../hooks/useData"
 import { IoIosHeartEmpty } from "react-icons/io"
 import { FaRegComment, FaRetweet } from "react-icons/fa6"
+import { useParams } from "react-router-dom"
+
+
+
 
 
 const Profile = () => {
-  const {tweetList, theUserId, user}= useData()
-
-  const myTweets = tweetList.filter((tweet)=> tweet.userid === theUserId)
-  
+  const {tweetList, user}= useData()
+  const{userId} = useParams()
+  const myTweets = tweetList.filter((tweet)=> tweet.userid === userId)
+console.log(userId)
   return (
     <div className="h-screen w-full">
     <UserProfile/>

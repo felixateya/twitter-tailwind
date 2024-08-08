@@ -3,8 +3,13 @@ import Sidebar from "../components/Sidebar";
 import FullpageLoader from "../components/FullpageLoader";
 import { useState } from "react";
 
+
 const HomeLayout = () => {
   const [loading, setLoading] = useState(false)
+  
+  
+
+  
 if(loading) return <FullpageLoader/>
   return (
     <div className="bg-black relative w-full min-h-screen flex">
