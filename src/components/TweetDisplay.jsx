@@ -5,6 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useData } from "../hooks/useData";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+import { Tooltip } from "@material-tailwind/react";
 
 const TweetDisplay = ({ tweet }) => {
   const { fetchUser } = useData();
@@ -39,21 +40,29 @@ const TweetDisplay = ({ tweet }) => {
         )}
       </div>
       <div className="flex w-[90%] pl-16 justify-between align-baseline">
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      <Tooltip content="Reply" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 items-center cursor-pointer text-gray-500">
           <FaRegComment />
           <span className="text-gray-500">2</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip content="Repost" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <FaRetweet />
           <span className="text-gray-500">200</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip  content="Like"  placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <IoIosHeartEmpty />
           <span className="text-gray-500">2.4M</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip content="Share" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <MdOutlineFileUpload />
         </p>
+      </Tooltip>
       </div>
     </div>
   );

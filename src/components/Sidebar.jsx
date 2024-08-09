@@ -28,19 +28,19 @@ const Sidebar = ({ setLoading }) => {
       activeIcon: <GoHomeFill />,
     },
     {
-      to: "/explore",
+      to: "/Explore",
       text: "Explore",
       icon: <GoSearch />,
       activeIcon: <FaSearch />,
     },
     {
-      to: "/notifications",
+      to: "/Notifications",
       text: "Notifications",
       icon: <GoBell />,
       activeIcon: <GoBellFill />,
     },
     {
-      to: "/messages",
+      to: "/Messages",
       text: "Messages",
       icon: <FaRegEnvelope />,
       activeIcon: <FaEnvelope />,
@@ -71,7 +71,7 @@ const Sidebar = ({ setLoading }) => {
     <aside className="w-[23%] border-r-[1px] fixed left-0 top-0 flex flex-col gap-6 xl:pl-10 pl-2 py-2 border-r-gray-600 h-full">
       <Link
         to="/"
-        className="font-bold flex items-center text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200"
+        className="font-bold flex items-center w-max text-4xl rounded-full text-white p-4 transition-600 hover:text-gray-200 hover:bg-gray-900"
       >
         <FaXTwitter />
       </Link>
@@ -80,7 +80,7 @@ const Sidebar = ({ setLoading }) => {
           <NavLink
             key={mylink.text}
             to={mylink.to}
-            className="text-2xl text-gray-300 font-normal  w-max  flex items-center gap-1 transition-600 hover:text-white"
+            className="text-[22px] text-gray-300 font-normal  w-max  flex items-center gap-6 rounded-full transition duration-600 hover:text-white py-2 px-4 hover:bg-gray-900"
           >
             <p className="text-3xl">
               {path === mylink.to ? mylink.activeIcon : mylink.icon}

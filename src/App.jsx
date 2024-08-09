@@ -22,9 +22,9 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<Home />} />
-            <Route path="explore" element={<Explore />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="messages" element={<Messages />} />
+            <Route path="Explore" element={<Explore />} />
+            <Route path="Notifications" element={<Notifications />} />
+            <Route path="Messages" element={<Messages />} />
             <Route path=":userId" element={<Profile />} />
           </Route>
         </Route>

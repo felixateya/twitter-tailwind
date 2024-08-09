@@ -36,7 +36,7 @@ function EditProfile() {
             <span className="text-xl">X</span>
           </button>
 
-          <h4>Edit Profile</h4>
+          <h4 className="text-white">Edit Profile</h4>
           <Button
             className="bg-white"
             color="green"
@@ -57,13 +57,13 @@ function EditProfile() {
             className="w-32 h-32 absolute top-[35%] left-10 rounded-full border-[5px] border-black"
           />
           <div className="flex flex-col w-full mt-24 pb-4 gap-6">
-            <Typography type="h5">Your Name</Typography>
+            <Typography type="h5" className="text-white">Your Name</Typography>
             <input
               className="p-4 rounded-xl w-[80%] text-white placeholder:text-white bg-transparent border-slate-500 border-[1px]"
               type="text"
               placeholder="username"
             />
-            <Typography type="h5">Bio</Typography>
+            <Typography type="h5" className="text-white">Bio</Typography>
             <input
               id="bio"
               className="p-4 rounded-xl text-white placeholder:text-white w-[80%] bg-transparent active:bg-transparent border-slate-500 border-[1px]"

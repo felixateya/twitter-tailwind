@@ -1,7 +1,7 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FullpageLoader from "../components/FullpageLoader";
 import toast from "react-hot-toast";
 import bgImage from '../assets/defcover.jpg'
@@ -9,6 +9,7 @@ const Login = () => {
 const {login} = useAuth()
 const navigate = useNavigate()
 const [email, setEmail] = useState('')
+const emailRef = useRef()
 const [password, setPassword] = useState('')
 const[loading, setLoading] = useState(false)
 
@@ -36,6 +37,7 @@ if(loading) return <FullpageLoader/>
           type="email"
           id="email"
           autoComplete="username" 
+          ref={emailRef}
           onChange={(e)=> setEmail(e.target.value)}
           placeholder="Enter your emial adrress"
         />

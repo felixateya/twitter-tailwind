@@ -5,6 +5,8 @@ import { MdOutlineGifBox } from "react-icons/md";
 import { PiChartBarHorizontal } from "react-icons/pi";
 import { useData } from "../hooks/useData";
 import { Tooltip } from "@material-tailwind/react";
+import EmojiPicker from "emoji-picker-react";
+import { useState } from "react";
 
 const TweetForm = () => {
   const {
@@ -16,6 +18,16 @@ const TweetForm = () => {
     handleImageChange,
     previewURL,
   } = useData();
+  const [open, setOpen] = useState(false);
+  const handleSetOpen = () => {
+    setOpen(!open);
+  };
+
+  // useEffect(()=>{
+  //   document.addEventListener('click', ()=>{
+  //     setOpen(!open)
+  //   })
+  // },[open])
 
   return (
     <form
@@ -57,7 +69,7 @@ const TweetForm = () => {
         </div>
       )}
       <div className="flex ml-[90px] w-5/6 justify-between px-2">
-        <div className="flex gap-4 w-1/2 items-center">
+        <div className="flex gap-4 w-1/2 items-center relative">
           <input
             className="hidden"
             onChange={handleImageChange}
@@ -76,13 +88,31 @@ const TweetForm = () => {
           </Tooltip>
           <MdOutlineGifBox className="text-blue-500 font-normal text-[27px]" />
           <PiChartBarHorizontal className="text-blue-500 font-normal text-[27px]" />
-          <FaRegSmile className="text-blue-500 font-normal text-[27px]" />
+          <Tooltip
+            content="Emoji"
+            placement="bottom"
+            className="bg-gray-800 text-white rounded-md p-2"
+          >
+            <p>
+              <FaRegSmile
+                onClick={handleSetOpen}
+                className="text-blue-500 cursor-pointer font-normal text-[27px]"
+              />
+            </p>
+          </Tooltip>
+          <EmojiPicker
+            onReactionClick={handleSetOpen}
+            theme="dark"
+            onEmojiClick={(emojiData, event)=> setTweetText((prev)=> prev + emojiData.emoji)}
+            style={{ position: "absolute", top: 50 }}
+            open={open}
+          />
         </div>
         <div className="flex gap-2 w-1/2 justify-end items-center">
           <FaCircleNotch className="text-gray-500 font-normal text-[27px]" />
           <CiCirclePlus className="text-blue-400 font-normal text-[27px]" />
           <button
-            disabled={previewURL.length < 3 && tweetText.length < 3}
+            disabled={previewURL.length < 3 && tweetText.length < 1}
             className="bg-blue-600 py-2 px-6 text-white w-max rounded-[30px] disabled:cursor-not-allowed disabled:bg-blue-400"
           >
             Post

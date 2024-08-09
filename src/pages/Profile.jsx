@@ -4,6 +4,7 @@ import { useData } from "../hooks/useData"
 import { IoIosHeartEmpty } from "react-icons/io"
 import { FaRegComment, FaRetweet } from "react-icons/fa6"
 import { useParams } from "react-router-dom"
+import { Tooltip } from "@material-tailwind/react"
 
 
 
@@ -13,7 +14,7 @@ const Profile = () => {
   const {tweetList, user}= useData()
   const{userId} = useParams()
   const myTweets = tweetList.filter((tweet)=> tweet.userid === userId)
-console.log(userId)
+
   return (
     <div className="h-screen w-full">
     <UserProfile/>
@@ -38,21 +39,29 @@ console.log(userId)
         )}
       </div>
       <div className="flex w-[90%] pl-16 justify-between align-baseline">
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      <Tooltip content="Reply" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 items-center cursor-pointer text-gray-500">
           <FaRegComment />
           <span className="text-gray-500">2</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip content="Repost" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <FaRetweet />
           <span className="text-gray-500">200</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip  content="Like" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <IoIosHeartEmpty />
           <span className="text-gray-500">2.4M</span>
         </p>
-        <p className="text-2xl flex gap-2 items-center text-gray-500">
+      </Tooltip>
+      <Tooltip content="Share" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+        <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <MdOutlineFileUpload />
         </p>
+      </Tooltip>
       </div>
     </div>
       </div>
