@@ -2,7 +2,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useData } from "../hooks/useData";
 import { useNavigate } from "react-router-dom";
 import EditProfile from "./EditProfile";
-import { Tooltip } from "@material-tailwind/react";
+import { Tooltip } from "@chakra-ui/react";
+
 const UserProfile = () => {
   const { user, tweetList, theUserId } = useData();
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const UserProfile = () => {
   return (
 <div className="text-white relative w-full pb-4 border-b-gray-500 border-b-2">
       <div className="px-4 py-2 flex gap-3 items-center">
-        <Tooltip content="Back" className="bg-gray-800 mt-2 text-white rounded-md p-2">
+        <Tooltip openDelay={300} label="Back" className="bg-gray-800 mt-2 text-white rounded-md p-2">
 
         <h5  className="cursor-pointer hover:bg-gray-800 rounded-full p-2 transition duration-300 ease-in-out" onClick={handleBack}>
           <FaArrowLeft />

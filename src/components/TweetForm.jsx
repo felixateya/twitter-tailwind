@@ -4,9 +4,10 @@ import { IoClose, IoImageOutline } from "react-icons/io5";
 import { MdOutlineGifBox } from "react-icons/md";
 import { PiChartBarHorizontal } from "react-icons/pi";
 import { useData } from "../hooks/useData";
-import { Tooltip } from "@material-tailwind/react";
+
 import EmojiPicker from "emoji-picker-react";
 import { useState } from "react";
+import { Tooltip } from "@chakra-ui/react";
 
 const TweetForm = () => {
   const {
@@ -22,12 +23,6 @@ const TweetForm = () => {
   const handleSetOpen = () => {
     setOpen(!open);
   };
-
-  // useEffect(()=>{
-  //   document.addEventListener('click', ()=>{
-  //     setOpen(!open)
-  //   })
-  // },[open])
 
   return (
     <form
@@ -69,7 +64,7 @@ const TweetForm = () => {
         </div>
       )}
       <div className="flex ml-[90px] w-5/6 justify-between px-2">
-        <div className="flex gap-4 w-1/2 items-center relative">
+        <div className="flex gap-4 w-1/2 h-max items-center relative">
           <input
             className="hidden"
             onChange={handleImageChange}
@@ -78,8 +73,8 @@ const TweetForm = () => {
             id="tweet-pic"
           />
           <Tooltip
-            content="Media"
-            placement="bottom"
+            label="Media"
+            openDelay={300}
             className="bg-gray-800 text-white rounded-md p-2"
           >
             <label className="cursor-pointer" htmlFor="tweet-pic">
@@ -89,8 +84,8 @@ const TweetForm = () => {
           <MdOutlineGifBox className="text-blue-500 font-normal text-[27px]" />
           <PiChartBarHorizontal className="text-blue-500 font-normal text-[27px]" />
           <Tooltip
-            content="Emoji"
-            placement="bottom"
+            label="Emoji"
+            openDelay={300}
             className="bg-gray-800 text-white rounded-md p-2"
           >
             <p>
@@ -101,9 +96,12 @@ const TweetForm = () => {
             </p>
           </Tooltip>
           <EmojiPicker
+            emojiStyle="twitter"
             onReactionClick={handleSetOpen}
             theme="dark"
-            onEmojiClick={(emojiData, event)=> setTweetText((prev)=> prev + emojiData.emoji)}
+            onEmojiClick={(emojiData, event) =>
+              setTweetText((prev) => prev + emojiData.emoji)
+            }
             style={{ position: "absolute", top: 50 }}
             open={open}
           />

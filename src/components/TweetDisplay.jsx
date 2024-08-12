@@ -5,7 +5,8 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useData } from "../hooks/useData";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import { Tooltip } from "@material-tailwind/react";
+import { Tooltip } from "@chakra-ui/react";
+
 
 const TweetDisplay = ({ tweet }) => {
   const { fetchUser } = useData();
@@ -40,25 +41,25 @@ const TweetDisplay = ({ tweet }) => {
         )}
       </div>
       <div className="flex w-[90%] pl-16 justify-between align-baseline">
-      <Tooltip content="Reply" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+      <Tooltip label="Reply" openDelay={300} className="bg-gray-800 text-white rounded-md p-2">
         <p className="text-2xl flex gap-2 items-center cursor-pointer text-gray-500">
           <FaRegComment />
           <span className="text-gray-500">2</span>
         </p>
       </Tooltip>
-      <Tooltip content="Repost" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+      <Tooltip label="Repost" openDelay={300} className="bg-gray-800 text-white rounded-md p-2">
         <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <FaRetweet />
           <span className="text-gray-500">200</span>
         </p>
       </Tooltip>
-      <Tooltip  content="Like"  placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+      <Tooltip  label="Like"  openDelay={300} className="bg-gray-800 text-white rounded-md p-2">
         <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <IoIosHeartEmpty />
           <span className="text-gray-500">2.4M</span>
         </p>
       </Tooltip>
-      <Tooltip content="Share" placement="bottom" className="bg-gray-800 text-white rounded-md p-2">
+      <Tooltip label="Share" openDelay={300} className="bg-gray-800 text-white rounded-md p-2">
         <p className="text-2xl flex gap-2 cursor-pointer items-center text-gray-500">
           <MdOutlineFileUpload />
         </p>
