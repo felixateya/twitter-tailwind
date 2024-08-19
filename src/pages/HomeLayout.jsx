@@ -1,25 +1,12 @@
 import { Outlet, useResolvedPath } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import FullpageLoader from "../components/FullpageLoader";
-import { useEffect, useState } from "react";
-import { useData } from "../hooks/useData";
+import { useState } from "react";
 
 const HomeLayout = () => {
   
   const [loading, setLoading] = useState(false);
-  const { pathname } = useResolvedPath();
-  const { theUserId } = useData();
-  useEffect(() => {
-    
-    if (pathname.replace("/", "") === theUserId) {
-      document.title = "Profile / X";
-    }else if(pathname === "/"){
-      document.title = "Home / X";
-
-    } else {
-      document.title = `${pathname.replace("/", "")} / X`;
-    }
-  }, [pathname, theUserId]);
+  
 
   if (loading) return <FullpageLoader />;
   return (
