@@ -3,25 +3,134 @@ import { FaCircleNotch, FaRegSmile } from "react-icons/fa";
 import { IoClose, IoImageOutline } from "react-icons/io5";
 import { MdOutlineGifBox } from "react-icons/md";
 import { PiChartBarHorizontal } from "react-icons/pi";
-import { useData } from "../hooks/useData";
 
 import EmojiPicker from "emoji-picker-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Tooltip } from "@chakra-ui/react";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { app } from "../firebase";
+import toast from "react-hot-toast";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const TweetForm = () => {
-  const {
-    setTweetText,
-    tweetText,
-    sendTweet,
-    setTweetPic,
-    setPreviewURL,
-    handleImageChange,
-    previewURL,
-  } = useData();
   const [open, setOpen] = useState(false);
+  const [tweetText, setTweetText] = useState("");
+  const [tweetPic, setTweetPic] = useState(null);
+  const [previewURL, setPreviewURL] = useState("");
+  const [picURL, setPicURL] = useState("");
+  const inputRef = useRef(null);
+  
+
+  const storage = getStorage(app);
+  const db = getFirestore(app);
+  const auth = getAuth();
+
+
+//* Handling image upload
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setTweetPic(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewURL(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const uploadImage = async (image) => {
+  try {
+    const storageRef = ref(
+      storage,
+      `tweet_pics/${Math.random()}_${image.name}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        () => {},
+        (error) => {
+          toast.error(error.message);
+          reject(error);
+        },
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          resolve(url);
+        }
+      );
+    });
+  } catch (error) {
+    toast.error(error.message);
+    throw error;
+  }
+};
+
+//* Creating a new tweet object
+const createTweet = async (user, tweetContent) => {
+  try {
+    const newTweet = doc(collection(db, "tweets"));
+    await setDoc(newTweet, {
+      userid: user.uid,
+      tweet: tweetContent,
+      tweetId: newTweet.id,
+      timestamp: new Date().getTime(),
+    });
+  } catch (error) {
+    toast.error(error.message);
+    console.error(error);
+  }
+};
+//* Sending the tweet object together with the tweetImage if one exists
+const sendTweet = async (e) => {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      let imageUrl = picURL;
+      if (tweetPic) {
+        imageUrl = await uploadImage(tweetPic);
+        setPicURL(imageUrl);
+      }
+
+      setTweetText("");
+      setTweetPic(null);
+      setPicURL("");
+      setPreviewURL("");
+      await createTweet(user, { text: tweetText, image: imageUrl });
+      toast.success("Tweet sent successfully");
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    }
+  }
+};
+
+
+
+//opening emojiPicker
   const handleSetOpen = () => {
     setOpen(!open);
+  };
+
+
+  // adding emojis
+  const handleEmojiClick = (emojiData) => {
+    const input = inputRef.current;
+    const { selectionStart, selectionEnd } = input;
+
+    const startText = tweetText.substring(0, selectionStart);
+    const endText = tweetText.substring(selectionEnd);
+
+    const updatedText = startText + emojiData.emoji + endText;
+    setTweetText(updatedText);
+
+    // Move caret position after the inserted emoji
+    setTimeout(() => {
+      input.selectionStart = input.selectionEnd = selectionStart + emojiData.emoji.length;
+    }, 0);
   };
 
   return (
@@ -38,6 +147,7 @@ const TweetForm = () => {
 
         <textarea
           value={tweetText}
+          ref={inputRef}
           onChange={(e) => setTweetText(e.target.value)}
           name="tweet"
           className="w-5/6 bg-transparent text-gray-400 text-xl outline-none py-4 px-2 resize-none placeholder:text-xl placeholder:text-gray-400"
@@ -99,9 +209,7 @@ const TweetForm = () => {
             emojiStyle="twitter"
             onReactionClick={handleSetOpen}
             theme="dark"
-            onEmojiClick={(emojiData, event) =>
-              setTweetText((prev) => prev + emojiData.emoji)
-            }
+            onEmojiClick={handleEmojiClick}
             style={{ position: "absolute", top: 50 }}
             open={open}
           />
