@@ -7,8 +7,8 @@ import { useParams } from "react-router-dom";
 import { Tooltip } from "@chakra-ui/react";
 
 const Profile = () => {
-  const { tweetList, user } = useData();
-  const { userId } = useParams();
+const { userId } = useParams();
+  const { tweetList, user } = useData(userId);
   const myTweets = tweetList.filter((tweet) => tweet.userid === userId);
 
   return (
