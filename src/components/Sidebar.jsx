@@ -85,7 +85,7 @@ const Sidebar = ({ setLoading }) => {
             <p className="text-3xl">
               {path === mylink.to ? mylink.activeIcon : mylink.icon}
             </p>
-            <p className="hidden xl:block">{mylink.text}</p>
+            <p className="hidden md:block">{mylink.text}</p>
           </NavLink>
         ))}
       </div>
